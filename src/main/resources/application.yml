@@ -1,0 +1,17 @@
+server:
+  port: 8082
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled:
+        force: true
+
+sprint:
+  application:
+    name: openapi
+
+openapi:
+  datagokr:
+    serviceKey: ibhl3JWeAa4iF49LPIZu6n9K+w4jdSj8PYAh02BkoMDmYFfqmE2xVx2SZn+NLq1P4pb6dhEaYPMN+d/ZFk63iA==
+  kosiskr:
+    serviceKey: YThjNGU4OTUyNzJhM2UyMzEzYzZiNGFjNWIyOWU3OTM=
