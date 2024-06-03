@@ -28,4 +28,5 @@ openapi:
   datagokr:
     serviceKey: ibhl3JWeAa4iF49LPIZu6n9K+w4jdSj8PYAh02BkoMDmYFfqmE2xVx2SZn+NLq1P4pb6dhEaYPMN+d/ZFk63iA==
   kosiskr:
+    url: https://kosis.kr/openapi/Param/statisticsParameterData.do
     serviceKey: YThjNGU4OTUyNzJhM2UyMzEzYzZiNGFjNWIyOWU3OTM=
