@@ -32,4 +32,16 @@ public class KosiskrApi {
         List<Map<String,Object>> data = kosiskrService.SeoulForestProducts();
         return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/ForestProducts/deagu")
+    public ResponseEntity<List<Map<String,Object>>>getDeaguForestProducts(){
+        List<Map<String,Object>> data = kosiskrService.DaeguForestProducts();
+        return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/ForestProducts/incheon")
+    public ResponseEntity<List<Map<String,Object>>>getIncheonForestProducts(){
+        List<Map<String,Object>> data = kosiskrService.IncheonForestProducts();
+        return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
+    }
 }

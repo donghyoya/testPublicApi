@@ -71,6 +71,10 @@ public class KosiskrService {
         }
     }
 
+    /**
+     * 서울특별시
+     * @return
+     */
     public List<Map<String, Object>>SeoulForestProducts(){
         URI uri = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("method", "getList")
@@ -97,6 +101,7 @@ public class KosiskrService {
                 entity,
                 new ParameterizedTypeReference<List<Map<String, Object>>>(){}
         );
+        List<Map<String,Object>> returnResponse =response.getBody();
 
 
         if (response.getStatusCode() == HttpStatus.OK) {
@@ -107,6 +112,10 @@ public class KosiskrService {
         }
     }
 
+    /**
+     * 부산광역시
+     * @return
+     */
     public List<Map<String,Object>> BusanForestProducts(){
         URI uri = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("method", "getList")
@@ -123,16 +132,7 @@ public class KosiskrService {
                 .build()
                 .toUri();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON)); // JSON 응답 강제
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
-                uri,
-                HttpMethod.GET,
-                entity,
-                new ParameterizedTypeReference<List<Map<String, Object>>>(){}
-        );
+        ResponseEntity<List<Map<String, Object>>> response = getListMap(uri, restTemplate);
 
 
         if (response.getStatusCode() == HttpStatus.OK) {
@@ -142,6 +142,70 @@ public class KosiskrService {
             return new ArrayList<>(); // 실패 시 빈 리스트 반환
         }
     }
+
+    /**
+     * 대구광역시
+     * @return
+     */
+    public List<Map<String,Object>> DaeguForestProducts(){
+        URI uri = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("method", "getList")
+                .queryParam("apiKey", apiKey)
+                .queryParam("itmId", "13103135561I+")
+                .queryParam("objL1", "ALL")
+                .queryParam("objL2", "ALL")
+                .queryParam("format", "json")
+                .queryParam("jsonVD", "Y")
+                .queryParam("prdSe", "Y")
+                .queryParam("newEstPrdCnt", "3")
+                .queryParam("orgId", "136")
+                .queryParam("tblId", "DT_136006_10896")
+                .build()
+                .toUri();
+
+        ResponseEntity<List<Map<String, Object>>> response = getListMap(uri, restTemplate);
+
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return response.getBody();
+        } else {
+            log.error("Failed to fetch data with status code: " + response.getStatusCode());
+            return new ArrayList<>(); // 실패 시 빈 리스트 반환
+        }
+    }
+
+    /**
+     * 인천광역시
+     * @return
+     */
+    public List<Map<String,Object>> IncheonForestProducts(){
+        URI uri = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("method", "getList")
+                .queryParam("apiKey", apiKey)
+                .queryParam("itmId", "13103135560I+")
+                .queryParam("objL1", "ALL")
+                .queryParam("objL2", "ALL")
+                .queryParam("format", "json")
+                .queryParam("jsonVD", "Y")
+                .queryParam("prdSe", "Y")
+                .queryParam("newEstPrdCnt", "3")
+                .queryParam("orgId", "136")
+                .queryParam("tblId", "DT_136006_10897")
+                .build()
+                .toUri();
+
+        ResponseEntity<List<Map<String, Object>>> response = getListMap(uri, restTemplate);
+
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return response.getBody();
+        } else {
+            log.error("Failed to fetch data with status code: " + response.getStatusCode());
+            return new ArrayList<>(); // 실패 시 빈 리스트 반환
+        }
+    }
+
+
 
     /**
      *
@@ -163,10 +227,22 @@ public class KosiskrService {
                 .build()
                 .toUri();
 
+        ResponseEntity<List<Map<String, Object>>> response = getListMap(uri, restTemplate);
+
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return response.getBody();
+        } else {
+            log.error("Failed to fetch data with status code: " + response.getStatusCode());
+            return new ArrayList<>(); // 실패 시 빈 리스트 반환
+        }
+    }
+
+
+    private static ResponseEntity<List<Map<String, Object>>>getListMap(URI uri, RestTemplate restTemplate){
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON)); // JSON 응답 강제
         HttpEntity<String> entity = new HttpEntity<>(headers);
-
 
         ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
                 uri,
@@ -174,10 +250,8 @@ public class KosiskrService {
                 entity,
                 new ParameterizedTypeReference<List<Map<String, Object>>>(){}
         );
-
-        return response.getBody();
+        return response;
     }
-
 
 
 
