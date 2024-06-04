@@ -44,4 +44,6 @@ public class KosiskrApi {
         List<Map<String,Object>> data = kosiskrService.IncheonForestProducts();
         return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
     }
+
+
 }
