@@ -14,10 +14,8 @@ import test.get.openapi.global.utils.ConverterUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -91,18 +89,9 @@ public class KosiskrService {
                 .build()
                 .toUri();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON)); // JSON 응답 강제
-        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<List<Map<String, Object>>> response = getListMap(uri, restTemplate);
 
-        ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
-                uri,
-                HttpMethod.GET,
-                entity,
-                new ParameterizedTypeReference<List<Map<String, Object>>>(){}
-        );
-        List<Map<String,Object>> returnResponse =response.getBody();
-
+        checkFieldTypeCnt(response);
 
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();
@@ -208,7 +197,7 @@ public class KosiskrService {
 
 
     /**
-     *
+     * 임산물생산비조사(밤)
      * @return
      */
     public List<Map<String, Object>> ForestProductsBam(){
@@ -230,12 +219,30 @@ public class KosiskrService {
         ResponseEntity<List<Map<String, Object>>> response = getListMap(uri, restTemplate);
 
 
+        checkFieldTypeCnt(response);
+
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();
         } else {
             log.error("Failed to fetch data with status code: " + response.getStatusCode());
             return new ArrayList<>(); // 실패 시 빈 리스트 반환
         }
+    }
+
+    private static void checkFieldTypeCnt(ResponseEntity<List<Map<String, Object>>> response){
+        List<Map<String, Object>> data = response.getBody();
+        Map<String, Set<Object>> uniqueValuesPerField = new HashMap<>();
+        // 데이터를 순회하면서 각 필드의 유니크한 값을 저장합니다.
+        data.forEach(map -> {
+            map.forEach((key, value) -> {
+                uniqueValuesPerField.computeIfAbsent(key, k -> new HashSet<>()).add(value);
+            });
+        });
+
+        // 각 필드에 대해 유니크한 값의 개수를 출력합니다.
+        uniqueValuesPerField.forEach((key, values) -> {
+            System.out.println(key + " has " + values.size() + " unique values");
+        });
     }
 
 

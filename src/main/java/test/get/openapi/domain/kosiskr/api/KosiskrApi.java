@@ -45,5 +45,10 @@ public class KosiskrApi {
         return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/ForestProducts/cost/bam")
+    public ResponseEntity<List<Map<String,Object>>>getBamForestProductsCost(){
+        List<Map<String,Object>> data = kosiskrService.ForestProductsBam();
+        return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
+    }
 
 }
